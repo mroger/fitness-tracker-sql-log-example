@@ -1,0 +1,119 @@
+<configuration>
+
+	<property name="SERVER_LOG_PATH" value="${server.logging.path:-/var/log/fitnesstracker}"/>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="SQLONLY_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/sqlonly.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/sqlonly-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level SQLONLY [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SQLTIMING_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/sqltiming.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/sqltiming-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level SQLTIMING [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SQLAUDIT_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/sqlaudit.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/sqlaudit-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level SQLAUDIT [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RESULTSET_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/resultset.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/resultset-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level RESULTSET [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RESULTSETTABLE_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/resultsettable.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/resultsettable-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level RESULTSETTABLE [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONNECTION_SERVER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_LOG_PATH}/connection.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_LOG_PATH}/connection-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level CONNECTION [%X{xtid}] [%logger{36}] [%thread] %msg%n%ex
+            </Pattern>
+        </encoder>
+    </appender>
+
+	<logger name="jdbc.sqlonly" level="INFO" additivity="false">
+    	<appender-ref ref="SQLONLY_SERVER_FILE"/>
+    </logger>
+	
+	<logger name="jdbc.sqltiming" level="INFO" additivity="false">
+    	<appender-ref ref="SQLTIMING_SERVER_FILE"/>
+    </logger>
+	
+	<logger name="jdbc.audit" level="INFO" additivity="false">
+    	<appender-ref ref="SQLAUDIT_SERVER_FILE"/>
+    </logger>
+	
+	<logger name="jdbc.resultset" level="INFO" additivity="false">
+    	<appender-ref ref="RESULTSET_SERVER_FILE"/>
+    </logger>
+	
+	<logger name="jdbc.resultsettable" level="INFO" additivity="false">
+    	<appender-ref ref="RESULTSETTABLE_SERVER_FILE"/>
+    </logger>
+	
+	<logger name="jdbc.connection" level="INFO" additivity="false">
+    	<appender-ref ref="CONNECTION_SERVER_FILE"/>
+    </logger>
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
